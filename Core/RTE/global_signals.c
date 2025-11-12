@@ -5,7 +5,7 @@
  * Este es el "hogar" de las variables; aquí es donde viven.
  */
 #include "global_signals.h" // Incluimos su propio.h por consistencia
-
+#include "tcu_types.h"
 // --- DEFINICIONES DE SEÑALES GLOBALES ---
 
 // Señales de CAN (entradas a la TCU)
