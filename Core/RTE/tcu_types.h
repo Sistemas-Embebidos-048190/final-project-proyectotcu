@@ -11,7 +11,8 @@
 typedef enum
 {
     DRIVER_MODE_ECO    = 0,
-    DRIVER_MODE_SPORT  = 1
+    DRIVER_MODE_SPORT  = 1,
+	DRIVER_MODE_NORMAL = 2,
 } DriverMode_Enum;
 
 // Enum para Gear_Lever_Position (P, R, N, D...)

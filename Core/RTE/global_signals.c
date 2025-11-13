@@ -6,14 +6,14 @@
  */
 #include "global_signals.h" // Incluimos su propio.h por consistencia
 #include "tcu_types.h"
-// --- DEFINICIONES DE SEÑALES GLOBALES ---
 
+// --- DEFINICIONES DE SEÑALES GLOBALES ---
+DriverMode_Enum g_CAN_Driver_Mode_Selection = DRIVER_MODE_NORMAL;
 // Señales de CAN (entradas a la TCU)
 uint16 g_CAN_Engine_RPM = 0;                  // RPM del motor
 uint8  g_CAN_Throttle_Position_Sensor = 0;    //Posición del pedal del acelerador
 sint16 g_CAN_Engine_Torque_Actual = 0;        //Par de motor actual (con signo)
 uint8  g_CAN_Vehicle_Speed_Reference = 0;     //Velocidad de referencia del vehículo
-uint8  g_CAN_Driver_Mode_Selection = 0;       //Modo de conducción seleccionado (Eco/Sport)
 
 // Señales de Hardwired (entradas a la TCU)
 uint8  g_HW_Gear_Lever_Position = 0;          //Posición física de la palanca de cambios
