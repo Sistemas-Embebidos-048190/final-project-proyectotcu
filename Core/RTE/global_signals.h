@@ -8,8 +8,7 @@
 #ifndef GLOBAL_SIGNALS_H
 #define GLOBAL_SIGNALS_H
 
-#include <Platform_Types.h> // Para uint16, uint8
-#include "tcu_types.h" // (Asumiendo que aquí defines GearEnum)
+#include "Platform_Types.h" // Para uint16, uint8
 
 // --- DECLARACIONES EXTERNAS DE SEÑALES GLOBALES ---
 // "extern" significa: "Esta variable está definida en OTRO archivo.c"
