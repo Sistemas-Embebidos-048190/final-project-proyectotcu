@@ -56,7 +56,7 @@
 // Funcion para asignar la posicion de la palanca
 uint8 Assign_Selection_Level(void)
 {
-	GPIO_PinRead()
+	/*GPIO_PinRead()
     if (pin1 == POS1) //Va a cambiar todo por los pines de NXP
     {
         Set_g_OUT_Current_Gear(PARKING); //Cambiar por RTE_Write_ Gear_level
@@ -78,7 +78,7 @@ uint8 Assign_Selection_Level(void)
     } else if (pin7 == POS7)
     {
         Set_g_OUT_Current_Gear(THIRD);
-    }
+    }*/
 }
 
 void BOARD_InitPins(void)
