@@ -1,10 +1,49 @@
-/*
- * Archivo: NvM.c (Implementación del Servicio BSW)
- *
- * Este es el código del módulo de servicio del BSW.
+/**
+ ********************************************************************************
+ * @file    NvM.c
+ * @author  ${user}
+ * @date    ${date}
+ * @brief   Implementación del Servicio BSW (Gestor de Memoria No Volátil)
+ ********************************************************************************
  */
+
+/************************************
+ * INCLUDES
+ ************************************/
 #include "NvM.h"
-#include "EepromDriver.h" // Incluye el Driver de más bajo nivel
+#include "EepromDriver.h" /* Incluye el Driver de más bajo nivel */
+
+/************************************
+ * EXTERN VARIABLES
+ ************************************/
+
+/************************************
+ * PRIVATE MACROS AND DEFINES
+ ************************************/
+
+/************************************
+ * PRIVATE TYPEDEFS
+ ************************************/
+
+/************************************
+ * STATIC VARIABLES
+ ************************************/
+
+/************************************
+ * GLOBAL VARIABLES
+ ************************************/
+
+/************************************
+ * STATIC FUNCTION PROTOTYPES
+ ************************************/
+
+/************************************
+ * STATIC FUNCTIONS
+ ************************************/
+
+/************************************
+ * GLOBAL FUNCTIONS
+ ************************************/
 
 // Esta es la implementación *real* del servicio
 Std_ReturnType NvM_WriteBlock(NvM_BlockIdType BlockId, const uint8* NvM_SrcPtr)
