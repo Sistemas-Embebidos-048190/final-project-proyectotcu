@@ -26,6 +26,8 @@
 /* Freescale/NXP includes */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "fsl_pwm.h"
+#include "IoHwAb_PWM.h"
 /* Nota: Probablemente necesites "fsl_pwm.h" y "board.h" aquí para que compile el PWM */
 
 /************************************
@@ -102,23 +104,23 @@ static void PWM_DRV_Init3PhPwm(void)
     pwmSignal[1].pwmchannelenable = true;
 
     /*********** PWMA_SM0 - phase A, configuration, setup 2 channel as an example ************/
-    PWM_SetupPwm(BOARD_PWM_BASEADDR, kPWM_Module_0, pwmSignal, 2, kPWM_SignedCenterAligned, pwmFrequencyInHz,
+    PWM_SetupPwm(PWM1_ADDRESS, kPWM_Module_0, pwmSignal, 2, kPWM_SignedCenterAligned, pwmFrequencyInHz,
                  pwmSourceClockInHz);
 
 #ifdef DEMO_PWM_CLOCK_DEVIDER
-    PWM_SetupPwm(BOARD_PWM_BASEADDR, kPWM_Module_1, pwmSignal, 1, kPWM_SignedCenterAligned, pwmFrequencyInHz,
+    PWM_SetupPwm(PWM1_ADDRESS, kPWM_Module_1, pwmSignal, 1, kPWM_SignedCenterAligned, pwmFrequencyInHz,
                  pwmSourceClockInHz / (1 << DEMO_PWM_CLOCK_DEVIDER));
 #else
-    PWM_SetupPwm(BOARD_PWM_BASEADDR, kPWM_Module_1, pwmSignal, 1, kPWM_SignedCenterAligned, pwmFrequencyInHz,
+    PWM_SetupPwm(PWM1_ADDRESS, kPWM_Module_1, pwmSignal, 1, kPWM_SignedCenterAligned, pwmFrequencyInHz,
                  pwmSourceClockInHz);
 #endif
 
     /*********** PWMA_SM2 - phase C configuration, setup PWM A channel only ************/
 #ifdef DEMO_PWM_CLOCK_DEVIDER
-    PWM_SetupPwm(BOARD_PWM_BASEADDR, kPWM_Module_2, pwmSignal, 1, kPWM_SignedCenterAligned, pwmFrequencyInHz,
+    PWM_SetupPwm(PWM1_ADDRESS, kPWM_Module_2, pwmSignal, 1, kPWM_SignedCenterAligned, pwmFrequencyInHz,
                  pwmSourceClockInHz / (1 << DEMO_PWM_CLOCK_DEVIDER));
 #else
-    PWM_SetupPwm(BOARD_PWM_BASEADDR, kPWM_Module_2, pwmSignal, 1, kPWM_SignedCenterAligned, pwmFrequencyInHz,
+    PWM_SetupPwm(PWM1_ADDRESS, kPWM_Module_2, pwmSignal, 1, kPWM_SignedCenterAligned, pwmFrequencyInHz,
                  pwmSourceClockInHz);
 #endif
 }
