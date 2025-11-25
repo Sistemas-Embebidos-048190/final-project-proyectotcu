@@ -1,39 +1,21 @@
 /*
  * ==================================================================================
  * ARCHIVO DE CABECERA (HEADER FILE)
- * Nombre: IoHwAb_IO.h
- * Descripción: Implementa la Capa de Abstracción de Hardware (HWAB) para la
- * lectura de entradas digitales y la asignación del nivel de selección (palanca).
+ * Nombre: MCU_Clocks.h
+ * Descripción: Contiene las declaraciones para la inicialización y configuración
+ * del sistema de relojes (clocks) del Microcontrolador (MCU).
  * ==================================================================================
  */
 
 // 1. GUÍA DE INCLUSIÓN (Include Guard)
-#ifndef IOHWAB_IO_H
-#define IOHWAB_IO_H
+#ifndef MCU_CLOCKS_H
+#define MCU_CLOCKS_H
 
 // 2. INCLUSIONES ESTÁNDAR O DEL SDK
-#include "Platform_Types.h"
-#include "Get_signals.h"
 
 // ----------------------------------------------------------------------------------
 
 // 3. DEFINICIÓN DE CONSTANTES (Macros)
-#ifndef BOARD_GPIO_PORT1
-#define BOARD_GPIO_PORT1 GPIO1
-
-#ifndef BOARD_GPIO_PORT2
-#define BOARD_GPIO_PORT2 GPIO2
-
-#ifndef BOARD_GPIO_PORT3
-#define BOARD_GPIO_PORT3 GPIO 3
-
-#ifndef BOARD_GPIO_PORT4
-#define BOARD_GPIO_PORT4 GPIO 4
-
-#ifndef BOARD_GPIO_PORT5
-#define BOARD_GPIO_PORT5 GPIO 5
-
-
 
 // ----------------------------------------------------------------------------------
 
@@ -43,14 +25,12 @@
 
 // 5. DECLARACIÓN DE FUNCIONES PÚBLICAS
 
-void BOARD_InitPins(void);
+void Clock_Init(void);
 
 /**
  * @brief Asigna el nivel de selección (posición de la palanca) basándose en las
  * señales de entrada leídas.
  */
-uint8 Assign_Selection_Level(void);
-
 // ----------------------------------------------------------------------------------
 
 #endif // IOHWAB_IO_H
