@@ -1,12 +1,30 @@
-/*
- * Platform_Types.h
- *
- *  Created on: Nov 11, 2025
- *      Author: gabit
+/**
+ ********************************************************************************
+ * @file    Inc_Platform_Types.h
+ * @author  ${user}
+ * @date    ${date}
+ * @brief   Definición de tipos de datos estándar de la plataforma (AUTOSAR style)
+ ********************************************************************************
  */
 
 #ifndef INC_PLATFORM_TYPES_H_
 #define INC_PLATFORM_TYPES_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/************************************
+ * INCLUDES
+ ************************************/
+
+/************************************
+ * MACROS AND DEFINES
+ ************************************/
+
+/************************************
+ * TYPEDEFS
+ ************************************/
 
 typedef unsigned char boolean;
 
@@ -20,14 +38,28 @@ typedef signed short sint16;
 typedef signed int sint32;
 typedef signed long long sint64;
 
-extern enum Positions {
-	PARKING = 0,
-	REVERSE,
-	NEUTRAL,
-	DRIVE,
-	FIRST,
-	SECOND,
-	THIRD
+/* Definición de posiciones de la palanca */
+enum Positions {
+    PARKING = 0,
+    REVERSE,
+    NEUTRAL,
+    DRIVE,
+    FIRST,
+    SECOND,
+    THIRD
 };
+
+/************************************
+ * EXPORTED VARIABLES
+ ************************************/
+
+/************************************
+ * GLOBAL FUNCTION PROTOTYPES
+ ************************************/
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* INC_PLATFORM_TYPES_H_ */

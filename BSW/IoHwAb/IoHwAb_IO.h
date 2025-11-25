@@ -1,56 +1,46 @@
-/*
- * ==================================================================================
- * ARCHIVO DE CABECERA (HEADER FILE)
- * Nombre: IoHwAb_IO.h
- * Descripción: Implementa la Capa de Abstracción de Hardware (HWAB) para la
- * lectura de entradas digitales y la asignación del nivel de selección (palanca).
- * ==================================================================================
+/**
+ ********************************************************************************
+ * @file    IoHwAb_IO.h
+ * @author  ${user}
+ * @date    ${date}
+ * @brief   Declaracion de funciones para asignar la posicion de la palanca
+ ********************************************************************************
  */
 
-// 1. GUÍA DE INCLUSIÓN (Include Guard)
 #ifndef IOHWAB_IO_H
 #define IOHWAB_IO_H
 
-// 2. INCLUSIONES ESTÁNDAR O DEL SDK
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/************************************
+ * INCLUDES
+ ************************************/
 #include "Platform_Types.h"
 #include "Get_signals.h"
 
-// ----------------------------------------------------------------------------------
+/************************************
+ * MACROS AND DEFINES
+ ************************************/
 
-// 3. DEFINICIÓN DE CONSTANTES (Macros)
-#ifndef BOARD_GPIO_PORT1
-#define BOARD_GPIO_PORT1 GPIO1
+/************************************
+ * TYPEDEFS
+ ************************************/
 
-#ifndef BOARD_GPIO_PORT2
-#define BOARD_GPIO_PORT2 GPIO2
+/************************************
+ * EXPORTED VARIABLES
+ ************************************/
 
-#ifndef BOARD_GPIO_PORT3
-#define BOARD_GPIO_PORT3 GPIO 3
+/************************************
+ * GLOBAL FUNCTION PROTOTYPES
+ ************************************/
 
-#ifndef BOARD_GPIO_PORT4
-#define BOARD_GPIO_PORT4 GPIO 4
-
-#ifndef BOARD_GPIO_PORT5
-#define BOARD_GPIO_PORT5 GPIO 5
-
-
-
-// ----------------------------------------------------------------------------------
-
-// 4. DEFINICIÓN DE TIPOS (Structs y Enums)
-
-// ----------------------------------------------------------------------------------
-
-// 5. DECLARACIÓN DE FUNCIONES PÚBLICAS
-
-void BOARD_InitPins(void);
-
-/**
- * @brief Asigna el nivel de selección (posición de la palanca) basándose en las
- * señales de entrada leídas.
- */
 uint8 Assign_Selection_Level(void);
 
-// ----------------------------------------------------------------------------------
 
-#endif // IOHWAB_IO_H
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* IOHWAB_IO_H */
