@@ -1,9 +1,48 @@
-/*
- * Archivo: EepromDriver.c (Implementación del Driver)
- *
- * Simula la implementación del driver de bajo nivel.
+/**
+ ********************************************************************************
+ * @file    EepromDriver.c
+ * @author  ${user}
+ * @date    ${date}
+ * @brief   Implementación del Driver de bajo nivel para EEPROM
+ ********************************************************************************
  */
+
+/************************************
+ * INCLUDES
+ ************************************/
 #include "EepromDriver.h"
+
+/************************************
+ * EXTERN VARIABLES
+ ************************************/
+
+/************************************
+ * PRIVATE MACROS AND DEFINES
+ ************************************/
+
+/************************************
+ * PRIVATE TYPEDEFS
+ ************************************/
+
+/************************************
+ * STATIC VARIABLES
+ ************************************/
+
+/************************************
+ * GLOBAL VARIABLES
+ ************************************/
+
+/************************************
+ * STATIC FUNCTION PROTOTYPES
+ ************************************/
+
+/************************************
+ * STATIC FUNCTIONS
+ ************************************/
+
+/************************************
+ * GLOBAL FUNCTIONS
+ ************************************/
 
 // Esta es la implementación *real* del driver de bajo nivel (simulada)
 Std_ReturnType Eeprom_WriteJob(NvM_BlockIdType BlockId, const uint8* NvM_SrcPtr)
