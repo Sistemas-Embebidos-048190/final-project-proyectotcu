@@ -11,6 +11,7 @@
  * INCLUDES
  ************************************/
 #include "IoHwAb_PWM.h"
+#include "main.c"
 
 /************************************
  * EXTERN VARIABLES
@@ -49,6 +50,5 @@ void PWM_INIT(void)
     /* Llamada directa a la función de inicialización */
     PWM_DRV_Init3PhPwm();
 
-    PWM_SetupPwm(PWM1, kPWM_Module_0, pwmSignal, 2, kPWM_SignedCenterAligned, pwmFrequencyInHz,
-                     pwmSourceClockInHz);
 }
+
