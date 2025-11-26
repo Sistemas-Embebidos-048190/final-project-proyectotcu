@@ -11,7 +11,6 @@
  * INCLUDES
  ************************************/
 #include "global_signals.h"
-#include "tcu_types.h"
 
 /************************************
  * EXTERN VARIABLES

@@ -48,22 +48,6 @@
  ************************************/
 
 /* ==========================================================
- * IMPLEMENTACIÓN API DE SERVICIOS (BSW)
- * ==========================================================
- */
-
-Std_ReturnType Rte_Call_R_NvM_WriteBlock(NvM_BlockIdType BlockId, const uint8* Data)
-{
-    Std_ReturnType ret;
-
-    // Reenviar la llamada a la función del BSW
-    ret = NvM_WriteBlock(BlockId, Data);
-
-    return ret;
-}
-
-
-/* ==========================================================
  * IMPLEMENTACIÓN API DE LECTURA (READ)
  * (Llaman a sus funciones Get_... de Get_signals.c)
  * ==========================================================
