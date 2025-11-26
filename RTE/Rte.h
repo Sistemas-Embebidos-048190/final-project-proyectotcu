@@ -17,8 +17,7 @@ extern "C" {
 /************************************
  * INCLUDES
  ************************************/
-#include "Platform_Types.h"
-#include "NvM.h"            /* Para NvM_BlockIdType */
+#include "Inc_Platform_Types.h"
 #include "global_signals.h" /* Para los nombres de las señales */
 #include "Set_signals.h"    /* Para las funciones Set_... */
 #include "Get_signals.h"    /* Para las funciones Get_... */
@@ -44,9 +43,6 @@ extern "C" {
  * API DE SERVICIOS (BSW)
  * ==========================================================
  */
-
-/* API de Puerto-Requerido (P-Port) que el SW-C llamará para guardar datos. */
-Std_ReturnType Rte_Call_R_NvM_WriteBlock(NvM_BlockIdType BlockId, const uint8* Data);
 
 
 /* ==========================================================

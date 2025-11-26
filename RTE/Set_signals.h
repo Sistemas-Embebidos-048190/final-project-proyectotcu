@@ -17,7 +17,7 @@ extern "C" {
 /************************************
  * INCLUDES
  ************************************/
-#include "Platform_Types.h"
+#include "Inc_Platform_Types.h"
 #include "global_signals.h"
 
 /************************************
