@@ -72,7 +72,7 @@ uint8 Assign_Selection_Level(void)
     } else if (GPIO_PinRead(TERCERA_GPIO,TERCERA_GPIO_PIN) == 1)
     {
         Set_g_OUT_Current_Gear(THIRD);
-    }
+    }*/
 }
 
 void GPIO_InitPins(void)

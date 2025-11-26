@@ -135,8 +135,7 @@ static void PWM_DRV_Init3PhPwm(void)
 int main(void)
 {
     /* Init board hardware. */
-    /* BOARD_InitHardware(); */
-
+    /*BOARD_InitHardware();*/
     if (xTaskCreate(hello_task, "Hello_task", configMINIMAL_STACK_SIZE + 100, NULL, hello_task_PRIORITY, NULL) !=
         pdPASS)
     {
