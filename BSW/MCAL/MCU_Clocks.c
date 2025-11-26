@@ -1,18 +1,17 @@
 /**
  ********************************************************************************
- * @file    IoHwAb_PWM.c
- * @author  ${user}
- * @date    ${date}
- * @brief   Implementación de la Abstracción de Hardware para PWM
+ * @file    MCU_Clocks.c
+ * @author  Gabo
+ * @date    24/11/2025
+ * @brief   Archivo C para inicializar relojes
  ********************************************************************************
  */
 
 /************************************
  * INCLUDES
  ************************************/
-#include "IoHwAb_PWM.h"
-#include "main.c"
-
+#include "MCU_Clocks.h"
+#include "fsl_clock.h"
 /************************************
  * EXTERN VARIABLES
  ************************************/
@@ -40,15 +39,11 @@
 /************************************
  * STATIC FUNCTIONS
  ************************************/
-
+void Clock_Init(void)
+{
+	CLOCK_EnableClock(kCLOCK_Port0);
+	CLOCK_EnableClock(kCLOCK_Port1);
+}
 /************************************
  * GLOBAL FUNCTIONS
  ************************************/
-
-void PWM_INIT(void)
-{
-    /* Llamada directa a la función de inicialización */
-    PWM_DRV_Init3PhPwm();
-
-}
-

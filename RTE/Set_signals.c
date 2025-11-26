@@ -1,7 +1,50 @@
-/* Archivo Set_signals.c */
+/**
+ ********************************************************************************
+ * @file    Set_signals.c
+ * @author  ${user}
+ * @date    ${date}
+ * @brief   Implementación de funciones "Setter" para escribir señales globales
+ ********************************************************************************
+ */
 
+/************************************
+ * INCLUDES
+ ************************************/
 #include "Set_signals.h"
+/* Nota: Asegúrate de que este archivo (o su header) tenga visibilidad de
+   "global_signals.h" para poder acceder a las variables g_... */
 
+/************************************
+ * EXTERN VARIABLES
+ ************************************/
+
+/************************************
+ * PRIVATE MACROS AND DEFINES
+ ************************************/
+
+/************************************
+ * PRIVATE TYPEDEFS
+ ************************************/
+
+/************************************
+ * STATIC VARIABLES
+ ************************************/
+
+/************************************
+ * GLOBAL VARIABLES
+ ************************************/
+
+/************************************
+ * STATIC FUNCTION PROTOTYPES
+ ************************************/
+
+/************************************
+ * STATIC FUNCTIONS
+ ************************************/
+
+/************************************
+ * GLOBAL FUNCTIONS
+ ************************************/
 
 // --- Funciones para Señales CAN (Entradas) ---
 
@@ -30,6 +73,7 @@ void Set_g_CAN_Driver_Mode_Selection(uint8 value)
     g_CAN_Driver_Mode_Selection = value;
 }
 
+
 // --- Funciones para Hardwired (Entradas) ---
 
 void Set_g_HW_Gear_Lever_Position(uint8 value)
@@ -56,6 +100,7 @@ void Set_g_HW_Transmission_Fluid_Temp(sint16 value)
 {
     g_HW_Transmission_Fluid_Temp = value;
 }
+
 
 // --- Funciones para Señales de Salida (Controladas por TCU) ---
 
