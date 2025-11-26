@@ -1,0 +1,15 @@
+inicizializar los pines de la tarjeta con las siguiente configuración:
+1. *Pines Analógicos (ADC) - Requieren configuración de canal ADC:*
+   - P0_14 -> ADC0_B14 (Función: Output_speed)
+   - P0_22 -> ADC0_A14 (Función: Temperatura)
+   - P0_15 -> ADC (Función: Sensor_turbina)
+
+2. *Pines Digitales (GPIO) - Configurar como ENTRADAS (Inputs) para leer estado:*
+   - P5_8 -> Break_pedal (Freno)
+   - P5_9 -> Parking
+   - P1_13 -> Reverse
+   - P2_0 -> Neutral
+   - P1_23 -> Drive
+   - P1_8 -> Primera
+   - P1_9 -> Segunda
+   - P1_14 -> Tercera
