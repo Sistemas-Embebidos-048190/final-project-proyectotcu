@@ -17,7 +17,7 @@ extern "C" {
 /************************************
  * INCLUDES
  ************************************/
-#include "Platform_Types.h" /* Para usar 'boolean' y tipos base */
+#include "Inc_Platform_Types.h" /* Para usar 'boolean' y tipos base */
 
 /************************************
  * MACROS AND DEFINES
