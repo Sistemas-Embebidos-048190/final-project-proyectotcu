@@ -9,11 +9,6 @@
 
 #ifndef IOHWAB_PWM_H
 #define IOHWAB_PWM_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /************************************
  * INCLUDES
  ************************************/
@@ -23,11 +18,10 @@ extern "C" {
 /************************************
  * MACROS AND DEFINES
  ************************************/
-#define PWM1_ADDRESS                PWM1
-#define PWM_SRC_CLK_FREQ            CLOCK_GetFreq(kCLOCK_BusClk)
-#define DEMO_PWM_FAULT_LEVEL        true
-#define APP_DEFAULT_PWM_FREQUENCY   (10000UL)
-
+#define BOARD_PWM_BASEADDR        PWM1
+#define PWM_SRC_CLK_FREQ          CLOCK_GetFreq(kCLOCK_BusClk)
+#define DEMO_PWM_FAULT_LEVEL      true
+#define APP_DEFAULT_PWM_FREQUENCY (10000UL)
 /************************************
  * TYPEDEFS
  ************************************/
@@ -41,10 +35,10 @@ extern "C" {
  ************************************/
 
 void PWM_INIT(void);
+void BOARD_InitPins();
 
 
-#ifdef __cplusplus
-}
 #endif
 
-#endif /* IOHWAB_PWM_H */
+
+

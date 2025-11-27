@@ -39,7 +39,9 @@
  ************************************/
 /* Task priorities */
 #define hello_task_PRIORITY (configMAX_PRIORITIES - 1)
-
+#ifndef DEMO_PWM_DISABLE_MAP_OP
+#define DEMO_PWM_DISABLE_MAP_OP
+#endif
 /************************************
  * PRIVATE TYPEDEFS
  ************************************/
@@ -65,24 +67,21 @@ static void PWM_DRV_Init3PhPwm(void);
 /*!
  * @brief Task responsible for printing of "Hello world." message.
  */
-static void hello_task(void *pvParameters)
+/*static void hello_task(void *pvParameters)
 {
     for (;;)
     {
-        PRINTF("Hello world.\r\n");
         vTaskSuspend(NULL);
     }
 }
-
+*/
 static void PWM_DRV_Init3PhPwm(void)
 {
     uint16_t deadTimeVal;
     pwm_signal_param_t pwmSignal[2];
     uint32_t pwmSourceClockInHz;
-    /* Nota: Asegúrate de que APP_DEFAULT_PWM_FREQUENCY esté definido (ej. en board.h o IoHwAb_PWM.h) */
-    uint32_t pwmFrequencyInHz = APP_DEFAULT_PWM_FREQUENCY;
+    uint32_t pwmFrequencyInHz = APP_DEFAULT_PWM_FREQUENCY ;
 
-    /* Nota: Asegúrate de que PWM_SRC_CLK_FREQ esté definido */
     pwmSourceClockInHz = PWM_SRC_CLK_FREQ;
 
     /* Set deadtime count, we set this to about 650ns */
@@ -104,48 +103,148 @@ static void PWM_DRV_Init3PhPwm(void)
     pwmSignal[1].pwmchannelenable = true;
 
     /*********** PWMA_SM0 - phase A, configuration, setup 2 channel as an example ************/
-    PWM_SetupPwm(PWM1_ADDRESS, kPWM_Module_0, pwmSignal, 2, kPWM_SignedCenterAligned, pwmFrequencyInHz,
+    PWM_SetupPwm(BOARD_PWM_BASEADDR, kPWM_Module_0, pwmSignal, 2, kPWM_SignedCenterAligned, pwmFrequencyInHz,
                  pwmSourceClockInHz);
 
+    /*********** PWMA_SM1 - phase B configuration, setup PWM A channel only ************/
 #ifdef DEMO_PWM_CLOCK_DEVIDER
-    PWM_SetupPwm(PWM1_ADDRESS, kPWM_Module_1, pwmSignal, 1, kPWM_SignedCenterAligned, pwmFrequencyInHz,
+    PWM_SetupPwm(BOARD_PWM_BASEADDR, kPWM_Module_1, pwmSignal, 1, kPWM_SignedCenterAligned, pwmFrequencyInHz,
                  pwmSourceClockInHz / (1 << DEMO_PWM_CLOCK_DEVIDER));
 #else
-    PWM_SetupPwm(PWM1_ADDRESS, kPWM_Module_1, pwmSignal, 1, kPWM_SignedCenterAligned, pwmFrequencyInHz,
+    PWM_SetupPwm(BOARD_PWM_BASEADDR, kPWM_Module_1, pwmSignal, 1, kPWM_SignedCenterAligned, pwmFrequencyInHz,
                  pwmSourceClockInHz);
 #endif
 
     /*********** PWMA_SM2 - phase C configuration, setup PWM A channel only ************/
 #ifdef DEMO_PWM_CLOCK_DEVIDER
-    PWM_SetupPwm(PWM1_ADDRESS, kPWM_Module_2, pwmSignal, 1, kPWM_SignedCenterAligned, pwmFrequencyInHz,
+    PWM_SetupPwm(BOARD_PWM_BASEADDR, kPWM_Module_2, pwmSignal, 1, kPWM_SignedCenterAligned, pwmFrequencyInHz,
                  pwmSourceClockInHz / (1 << DEMO_PWM_CLOCK_DEVIDER));
 #else
-    PWM_SetupPwm(PWM1_ADDRESS, kPWM_Module_2, pwmSignal, 1, kPWM_SignedCenterAligned, pwmFrequencyInHz,
+    PWM_SetupPwm(BOARD_PWM_BASEADDR, kPWM_Module_2, pwmSignal, 1, kPWM_SignedCenterAligned, pwmFrequencyInHz,
                  pwmSourceClockInHz);
 #endif
 }
 
-/************************************
- * GLOBAL FUNCTIONS
- ************************************/
-
 /*!
- * @brief Application entry point.
+ * @brief Main function
  */
 int main(void)
 {
-    /* Init board hardware. */
-    /*BOARD_InitHardware();*/
-    if (xTaskCreate(hello_task, "Hello_task", configMINIMAL_STACK_SIZE + 100, NULL, hello_task_PRIORITY, NULL) !=
-        pdPASS)
+    /* Structure of initialize PWM */
+    pwm_config_t pwmConfig;
+    pwm_fault_param_t faultConfig;
+    uint32_t pwmVal = 4;
+
+    /* Board pin, clock, debug console init */
+    //BOARD_InitHardware();
+    SYSCON->PWM1SUBCTL |=
+           (SYSCON_PWM1SUBCTL_CLK0_EN_MASK | SYSCON_PWM1SUBCTL_CLK1_EN_MASK | SYSCON_PWM1SUBCTL_CLK2_EN_MASK);
+    PRINTF("FlexPWM driver example\n");
+    /*
+     * pwmConfig.enableDebugMode = false;
+     * pwmConfig.enableWait = false;
+     * pwmConfig.reloadSelect = kPWM_LocalReload;
+     * pwmConfig.clockSource = kPWM_BusClock;
+     * pwmConfig.prescale = kPWM_Prescale_Divide_1;
+     * pwmConfig.initializationControl = kPWM_Initialize_LocalSync;
+     * pwmConfig.forceTrigger = kPWM_Force_Local;
+     * pwmConfig.reloadFrequency = kPWM_LoadEveryOportunity;
+     * pwmConfig.reloadLogic = kPWM_ReloadImmediate;
+     * pwmConfig.pairOperation = kPWM_Independent;
+     */
+    PWM_GetDefaultConfig(&pwmConfig);
+
+#ifdef DEMO_PWM_CLOCK_DEVIDER
+    pwmConfig.prescale = DEMO_PWM_CLOCK_DEVIDER;
+#endif
+
+    /* Use full cycle reload */
+    pwmConfig.reloadLogic = kPWM_ReloadPwmFullCycle;
+    /* PWM A & PWM B form a complementary PWM pair */
+    pwmConfig.pairOperation   = kPWM_ComplementaryPwmA;
+    pwmConfig.enableDebugMode = true;
+
+    /* Initialize submodule 0 */
+    if (PWM_Init(BOARD_PWM_BASEADDR, kPWM_Module_0, &pwmConfig) == kStatus_Fail)
     {
-        PRINTF("Task creation failed!.\r\n");
-        while (1)
-            ;
+        PRINTF("PWM initialization failed\n");
+        return 1;
     }
 
-    vTaskStartScheduler();
+    /* Initialize submodule 1, make it use same counter clock as submodule 0. */
+    pwmConfig.clockSource           = kPWM_Submodule0Clock;
+    pwmConfig.prescale              = kPWM_Prescale_Divide_1;
+    pwmConfig.initializationControl = kPWM_Initialize_MasterSync;
+    if (PWM_Init(BOARD_PWM_BASEADDR, kPWM_Module_1, &pwmConfig) == kStatus_Fail)
+    {
+        PRINTF("PWM initialization failed\n");
+        return 1;
+    }
 
-    for (;;)
-        ;
+    /* Initialize submodule 2 the same way as submodule 1 */
+    if (PWM_Init(BOARD_PWM_BASEADDR, kPWM_Module_2, &pwmConfig) == kStatus_Fail)
+    {
+        PRINTF("PWM initialization failed\n");
+        return 1;
+    }
+
+    /*
+     *   config->faultClearingMode = kPWM_Automatic;
+     *   config->faultLevel = false;
+     *   config->enableCombinationalPath = true;
+     *   config->recoverMode = kPWM_NoRecovery;
+     */
+    PWM_FaultDefaultConfig(&faultConfig);
+
+#ifdef DEMO_PWM_FAULT_LEVEL
+    faultConfig.faultLevel = DEMO_PWM_FAULT_LEVEL;
+#endif
+    /* Sets up the PWM fault protection */
+    PWM_SetupFaults(BOARD_PWM_BASEADDR, kPWM_Fault_0, &faultConfig);
+    PWM_SetupFaults(BOARD_PWM_BASEADDR, kPWM_Fault_1, &faultConfig);
+    PWM_SetupFaults(BOARD_PWM_BASEADDR, kPWM_Fault_2, &faultConfig);
+    PWM_SetupFaults(BOARD_PWM_BASEADDR, kPWM_Fault_3, &faultConfig);
+
+    /* Set PWM fault disable mapping for submodule 0/1/2 */
+    PWM_SetupFaultDisableMap(BOARD_PWM_BASEADDR, kPWM_Module_0, kPWM_PwmA, kPWM_faultchannel_0,
+                             DEMO_PWM_DISABLE_MAP_OP(kPWM_FaultDisable_0 | kPWM_FaultDisable_1 | kPWM_FaultDisable_2 | kPWM_FaultDisable_3));
+    PWM_SetupFaultDisableMap(BOARD_PWM_BASEADDR, kPWM_Module_1, kPWM_PwmA, kPWM_faultchannel_0,
+                             DEMO_PWM_DISABLE_MAP_OP(kPWM_FaultDisable_0 | kPWM_FaultDisable_1 | kPWM_FaultDisable_2 | kPWM_FaultDisable_3));
+    PWM_SetupFaultDisableMap(BOARD_PWM_BASEADDR, kPWM_Module_2, kPWM_PwmA, kPWM_faultchannel_0,
+                             DEMO_PWM_DISABLE_MAP_OP(kPWM_FaultDisable_0 | kPWM_FaultDisable_1 | kPWM_FaultDisable_2 | kPWM_FaultDisable_3));
+    /*
+     * Call the init function with demo configuration.
+     * Recommend to invoke API PWM_SetupPwm after PWM and fault configuration, because reference manual advises to
+     * set OUTEN register after other PWM configurations. But set OUTEN register before MCTRL register is okay.
+     */
+    PWM_DRV_Init3PhPwm();
+
+    /* Set the load okay bit for all submodules to load registers from their buffer */
+    PWM_SetPwmLdok(BOARD_PWM_BASEADDR, kPWM_Control_Module_0 | kPWM_Control_Module_1 | kPWM_Control_Module_2, true);
+
+    /* Start the PWM generation from Submodules 0, 1 and 2 */
+    PWM_StartTimer(BOARD_PWM_BASEADDR, kPWM_Control_Module_0 | kPWM_Control_Module_1 | kPWM_Control_Module_2);
+
+    while (1U)
+    {
+        /* Delay at least 100 PWM periods. */
+        SDK_DelayAtLeastUs((1000000U / APP_DEFAULT_PWM_FREQUENCY) * 100, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+
+        pwmVal = pwmVal + 4;
+
+        /* Reset the duty cycle percentage */
+        if (pwmVal > 100)
+        {
+            pwmVal = 4;
+        }
+
+        /* Update duty cycles for all 3 PWM signals */
+        PWM_UpdatePwmDutycycle(BOARD_PWM_BASEADDR, kPWM_Module_0, kPWM_PwmA, kPWM_SignedCenterAligned, pwmVal);//le envia el valor de los pines del selenoide
+        PWM_UpdatePwmDutycycle(BOARD_PWM_BASEADDR, kPWM_Module_1, kPWM_PwmA, kPWM_SignedCenterAligned, (pwmVal >> 1));
+        PWM_UpdatePwmDutycycle(BOARD_PWM_BASEADDR, kPWM_Module_2, kPWM_PwmA, kPWM_SignedCenterAligned, (pwmVal >> 2));
+
+        /* Set the load okay bit for all submodules to load registers from their buffer */
+        PWM_SetPwmLdok(BOARD_PWM_BASEADDR, kPWM_Control_Module_0 | kPWM_Control_Module_1 | kPWM_Control_Module_2, true);
+    }
 }
+
